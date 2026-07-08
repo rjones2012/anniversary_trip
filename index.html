@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3efe7">
+<title>The Grand Tour · Summer 2026</title>
+<style>
+  :root {
+    --paper: #f3efe7;
+    --card: #fffdf8;
+    --ink: #1c1c28;
+    --muted: #726d61;
+    --line: #e2ddd1;
+    --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+    /* leg accents */
+    --london: #46586e;
+    --navarino: #2f7d8f;
+    --champagne: #b08a3e;
+    --paris: #8c3b46;
+    --accent: var(--london);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: Georgia, "Times New Roman", serif; }
+  .mono { font-family: var(--mono); }
+
+  /* ---------- Top nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(243,239,231,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 780px; margin: 0 auto;
+    display: flex; align-items: center; gap: 4px;
+    padding: 8px 10px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: Georgia, serif; font-weight: 600; font-size: 15px;
+    margin-right: 8px; white-space: nowrap; letter-spacing: .3px;
+    cursor: pointer;
+  }
+  .nav-tab {
+    border: none; background: none; cursor: pointer;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    padding: 6px 11px; border-radius: 20px; white-space: nowrap;
+    transition: color .15s, background .15s;
+  }
+  .nav-tab:hover { color: var(--ink); }
+  .nav-tab.active { color: #fff; background: var(--accent); }
+
+  /* ---------- Page sections ---------- */
+  .page { display: none; max-width: 780px; margin: 0 auto; padding: 0 18px 80px; }
+  .page.visible { display: block; animation: fade .35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Home hero ---------- */
+  .hero { text-align: center; padding: 40px 8px 20px; }
+  .hero .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: Georgia, serif; font-weight: 600;
+    font-size: 40px; line-height: 1.05; margin: 0 0 10px;
+    letter-spacing: .5px;
+  }
+  .hero .dates { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+  .countdown {
+    margin: 22px auto 8px; display: inline-flex; align-items: baseline; gap: 8px;
+    padding: 10px 22px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 40px;
+  }
+  .countdown .num { font-family: Georgia, serif; font-size: 30px; font-weight: 600; }
+  .countdown .lbl { font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- Route line ---------- */
+  .route { margin: 30px 0 10px; }
+  .route-stop {
+    display: flex; align-items: flex-start; gap: 14px;
+    cursor: pointer; padding: 4px 0;
+  }
+  .route-rail { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+  .route-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 3px solid var(--stop); background: var(--card); flex-shrink: 0;
+  }
+  .route-line-seg { width: 3px; flex: 1; min-height: 42px; background: var(--line); }
+  .route-stop:last-child .route-line-seg { display: none; }
+  .route-body { padding-bottom: 8px; flex: 1; }
+  .route-city { font-family: Georgia, serif; font-size: 21px; font-weight: 600; }
+  .route-meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .route-sub { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .route-stop:hover .route-city { color: var(--stop); }
+
+  /* ---------- Leg header ---------- */
+  .leg-hero { padding: 30px 4px 10px; border-bottom: 2px solid var(--accent); margin-bottom: 4px; }
+  .leg-hero .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .leg-hero h2 { font-family: Georgia, serif; font-size: 32px; font-weight: 600; margin: 0 0 6px; }
+  .leg-hero .hotel { font-size: 14px; color: var(--muted); }
+  .leg-hero .hotel a { color: var(--accent); text-decoration: none; }
+
+  /* ---------- Day cards ---------- */
+  .day {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px 18px; margin: 14px 0;
+  }
+  .day-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .day-date {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 6px;
+    white-space: nowrap;
+  }
+  .day-title { font-family: Georgia, serif; font-size: 18px; font-weight: 600; }
+  .day-note { font-size: 13px; color: var(--muted); font-style: italic; margin: 6px 0 2px; }
+  .items { list-style: none; margin: 10px 0 0; padding: 0; }
+  .items li {
+    display: flex; gap: 10px; padding: 7px 0; font-size: 14.5px;
+    border-top: 1px dotted var(--line);
+  }
+  .items li:first-child { border-top: none; }
+  .items .time {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    min-width: 58px; flex-shrink: 0; padding-top: 1px;
+  }
+  .items .what strong { font-weight: 600; }
+  .items .what span { display: block; font-size: 12.5px; color: var(--muted); }
+  .tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: .5px; padding: 1px 6px;
+    border-radius: 4px; margin-left: 6px; vertical-align: middle;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+  .tag.food { border-color: #c98b46; color: #a8702f; }
+  .tag.book { border-color: var(--accent); color: var(--accent); }
+  .tag.done { border-color: #8fa084; color: #6f8064; }
+
+  /* ---------- Ticket stub ---------- */
+  .ticket {
+    display: flex; align-items: center; gap: 12px; margin: 8px 0;
+    background: var(--card); border: 1px dashed var(--accent);
+    border-radius: 10px; padding: 10px 14px;
+  }
+  .ticket .code { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--accent); }
+  .ticket .leg-route { font-size: 13px; }
+  .ticket .t-time { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: auto; text-align: right; }
+
+  /* ---------- Checklist ---------- */
+  .check-intro { font-size: 14px; color: var(--muted); margin: 6px 0 14px; }
+  .progress-track { height: 8px; background: var(--line); border-radius: 20px; overflow: hidden; margin-bottom: 4px; }
+  .progress-fill { height: 100%; width: 0; background: #8fa084; border-radius: 20px; transition: width .35s ease; }
+  .progress-label { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: center; margin-bottom: 18px; }
+  .chk-group-title {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); margin: 18px 2px 6px;
+  }
+  .chk {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    margin-bottom: 7px; display: flex; align-items: flex-start; padding: 12px 14px;
+    cursor: pointer; user-select: none;
+  }
+  .chk:active { background: #f2efe8; }
+  .chk .box {
+    width: 22px; height: 22px; border: 2px solid var(--accent); border-radius: 6px;
+    margin-right: 12px; margin-top: 1px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chk .box svg { width: 14px; height: 14px; opacity: 0; }
+  .chk.done .box { background: #8fa084; border-color: #8fa084; }
+  .chk.done .box svg { opacity: 1; }
+  .chk.done .c-text { text-decoration: line-through; color: var(--muted); }
+  .c-text { flex: 1; font-size: 14.5px; }
+  .c-note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .c-flag {
+    display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .5px; color: #fff; background: #b5643f;
+    padding: 1px 6px; border-radius: 4px; margin-left: 6px;
+  }
+  .chk.done .c-flag { background: var(--muted); }
+
+  .maplink { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 30px 20px 40px; }
+  .reset-btn {
+    display: block; margin: 24px auto 0; background: none; border: 1px solid var(--line);
+    color: var(--muted); font-size: 13px; padding: 8px 18px; border-radius: 20px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand" data-go="home">Grand Tour ’26</span>
+    <button class="nav-tab active" data-go="home">Overview</button>
+    <button class="nav-tab" data-go="london">London</button>
+    <button class="nav-tab" data-go="navarino">Navarino</button>
+    <button class="nav-tab" data-go="champagne">Champagne</button>
+    <button class="nav-tab" data-go="paris">Paris</button>
+    <button class="nav-tab" data-go="checklist">Checklist</button>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<section class="page visible" id="home">
+  <div class="hero">
+    <div class="eyebrow">17 July — 2 August 2026</div>
+    <h1 class="serif">The Grand Tour</h1>
+    <div class="dates">London · Costa Navarino · Champagne · Paris</div>
+    <div class="countdown">
+      <span class="num" id="cd-num">—</span>
+      <span class="lbl">days to London</span>
+    </div>
+  </div>
+
+  <div class="route">
+    <div class="route-stop" data-go="london" style="--stop:var(--london)">
+      <div class="route-rail"><div class="route-dot"></div><div class="route-line-seg"></div></div>
+      <div class="route-body">
+        <div class="route-city">London</div>
+        <div class="route-meta">Jul 17 – 19 · The Beaumont, Mayfair</div>
+        <div class="route-sub">Tea, shopping, birthday dinner, Hyde Park</div>
+      </div>
+    </div>
+    <div class="route-stop" data-go="navarino" style="--stop:var(--navarino)">
+      <div class="route-rail"><div class="route-dot"></div><div class="route-line-seg"></div></div>
+      <div class="route-body">
+        <div class="route-city">Costa Navarino</div>
+        <div class="route-meta">Jul 19 – 23 · Mandarin Oriental</div>
+        <div class="route-sub">Spa, golf, beaches, Pylos, private kitchen</div>
+      </div>
+    </div>
+    <div class="route-stop" data-go="champagne" style="--stop:var(--champagne)">
+      <div class="route-rail"><div class="route-dot"></div><div class="route-line-seg"></div></div>
+      <div class="route-body">
+        <div class="route-city">Champagne</div>
+        <div class="route-meta">Jul 23 – 26 · Royal Champagne</div>
+        <div class="route-sub">Bike picnic, cellar tasting, spa, pool</div>
+      </div>
+    </div>
+    <div class="route-stop" data-go="paris" style="--stop:var(--paris)">
+      <div class="route-rail"><div class="route-dot"></div><div class="route-line-seg"></div></div>
+      <div class="route-body">
+        <div class="route-city">Paris</div>
+        <div class="route-meta">Jul 26 – Aug 2 · Relais Christine</div>
+        <div class="route-sub">Museums at leisure, croissants, Versailles, Normandy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LONDON ============ -->
+<section class="page" id="london" data-accent="var(--london)">
+  <div class="leg-hero">
+    <div class="eyebrow">Leg One</div>
+    <h2 class="serif">London</h2>
+    <div class="hotel">The Beaumont, Mayfair · <a class="maplink" href="https://maps.google.com/?q=The+Beaumont+Mayfair+London" target="_blank">map</a></div>
+  </div>
+
+  <div class="ticket">
+    <span class="code">BA222</span>
+    <span class="leg-route">Arrive London</span>
+    <span class="t-time">Fri Jul 17</span>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">FRI · JUL 17</span><span class="day-title serif">Arrival</span></div>
+    <div class="day-note">Tired day — keep it gentle.</div>
+    <ul class="items">
+      <li><span class="time">4:00 PM</span><span class="what"><strong>Afternoon tea at Fortnum &amp; Mason</strong><span class="tag food">dine</span><span class="tag book">book</span><span>Diamond Jubilee Tea Salon, Piccadilly</span></span></li>
+      <li><span class="time">Late aft</span><span class="what"><strong>Shopping / stroll</strong><span>Mayfair, Piccadilly, Burlington Arcade</span></span></li>
+      <li><span class="time">Eve</span><span class="what"><strong>Light dinner near hotel</strong><span class="tag food">dine</span><span>Walk-in, keep it easy</span></span></li>
+      <li><span class="time">Night</span><span class="what"><strong>Nightcap</strong><span>The American Bar at The Beaumont</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SAT · JUL 18</span><span class="day-title serif">Birthday</span></div>
+    <div class="day-note">Late start — time in the room first. A walking day.</div>
+    <ul class="items">
+      <li><span class="time">Late AM</span><span class="what"><strong>Slow start</strong><span>Breakfast in room</span></span></li>
+      <li><span class="time">Midday</span><span class="what"><strong>Cool shops &amp; maps</strong><span>Daunt Books (Marylebone), Shapero Rare Books &amp; antique map dealers, Cecil Court off Charing Cross</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Market wander</strong><span>Marylebone High St, or Portobello/Golborne if further afield</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Drink in Hyde Park</strong><span>Serpentine Bar &amp; Kitchen, or a walk through Kensington Gardens</span></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Palms of Goa</strong><span class="tag food">dine</span><span class="tag book">book</span><span>Birthday dinner</span></span></li>
+    </ul>
+  </div>
+
+  <div class="ticket">
+    <span class="code">BA744</span>
+    <span class="leg-route">Gatwick → Kalamata</span>
+    <span class="t-time">Sun Jul 19 · 6:50 AM</span>
+  </div>
+  <div class="day">
+    <div class="day-note" style="font-style:normal">Very early departure — arrange a car to Gatwick the night before. Arrives Kalamata 12:40 PM.</div>
+  </div>
+</section>
+
+<!-- ============ COSTA NAVARINO ============ -->
+<section class="page" id="navarino" data-accent="var(--navarino)">
+  <div class="leg-hero">
+    <div class="eyebrow">Leg Two</div>
+    <h2 class="serif">Costa Navarino</h2>
+    <div class="hotel">Mandarin Oriental, Messenia · <a class="maplink" href="https://maps.google.com/?q=Mandarin+Oriental+Costa+Navarino" target="_blank">map</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SUN · JUL 19</span><span class="day-title serif">Arrival</span></div>
+    <ul class="items">
+      <li><span class="time">12:40 PM</span><span class="what"><strong>Land Kalamata → driver to resort</strong><span class="tag book">book</span><span>Private transfer arranged</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Check in &amp; explore the resort</strong></span></li>
+      <li><span class="time">Late</span><span class="what"><strong>Dinner at the Greek restaurant</strong><span class="tag food">dine</span><span class="tag book">book</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">MON · JUL 20</span><span class="day-title serif">Spa &amp; sea</span></div>
+    <ul class="items">
+      <li><span class="time">Late AM</span><span class="what"><strong>Sleep in</strong></span></li>
+      <li><span class="time">Midday</span><span class="what"><strong>Hammam / Turkish treatment</strong><span class="tag book">book</span><span>At the spa</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Pool / beach day</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Pizza restaurant at hotel</strong><span class="tag food">dine</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">TUE · JUL 21</span><span class="day-title serif">Golf &amp; Pylos</span></div>
+    <ul class="items">
+      <li><span class="time">Early</span><span class="what"><strong>Golf — Bay Course</strong><span class="tag book">book</span><span>Richie golfs; Angie to the beach</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Famous beach near Pylos</strong><span>Voidokilia is the icon</span></span></li>
+      <li><span class="time">Eve</span><span class="what"><strong>Explore Pylos + dinner</strong><span class="tag food">dine</span><span>Good Greek, good atmosphere on the waterfront. Uber back after.</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">WED · JUL 22</span><span class="day-title serif">Cocktails &amp; private kitchen</span></div>
+    <ul class="items">
+      <li><span class="time">Day</span><span class="what"><strong>Pool / beach day</strong></span></li>
+      <li><span class="time">5:00 PM</span><span class="what"><strong>Mixology class — Three Admirals</strong><span class="tag book">book</span></span></li>
+      <li><span class="time">~8:00 PM</span><span class="what"><strong>Dinner at the Private Kitchen</strong><span class="tag food">dine</span><span class="tag book">book</span></span></li>
+    </ul>
+  </div>
+
+  <div class="ticket">
+    <span class="code">TO3561</span>
+    <span class="leg-route">Kalamata → Paris Orly</span>
+    <span class="t-time">Thu Jul 23 · 11:40 AM</span>
+  </div>
+  <div class="day">
+    <div class="day-note" style="font-style:normal">Transavia (low-cost) — confirm baggage &amp; seats in advance. Arrive Orly ~2:00 PM, then black car to Champagne.</div>
+  </div>
+</section>
+
+<!-- ============ CHAMPAGNE ============ -->
+<section class="page" id="champagne" data-accent="var(--champagne)">
+  <div class="leg-hero">
+    <div class="eyebrow">Leg Three</div>
+    <h2 class="serif">Champagne</h2>
+    <div class="hotel">Royal Champagne Hotel &amp; Spa, Champillon · <a class="maplink" href="https://maps.google.com/?q=Royal+Champagne+Hotel+Spa+Champillon" target="_blank">map</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">THU · JUL 23</span><span class="day-title serif">Arrival</span></div>
+    <ul class="items">
+      <li><span class="time">~2:00 PM</span><span class="what"><strong>Orly → Royal Champagne (black car)</strong><span class="tag book">book</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Explore the hotel</strong><span>Pool, terrace, the view</span></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Easy dinner at the hotel</strong><span class="tag food">dine</span><span>Le Bellevue / bistro side</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">FRI · JUL 24</span><span class="day-title serif">Bike picnic</span></div>
+    <ul class="items">
+      <li><span class="time">Early</span><span class="what"><strong>Bike ride to a picnic</strong><span class="tag book">book</span><span>Through the vines — confirm bikes + packed picnic with the hotel</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Afternoon at the pool</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Le Royal — the nice restaurant</strong><span class="tag food">dine</span><span class="tag book">book</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SAT · JUL 25</span><span class="day-title serif">Cellar tasting</span></div>
+    <ul class="items">
+      <li><span class="time">AM</span><span class="what"><strong>Wine tasting at the cellar</strong><span class="tag book">book</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Pool afternoon</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Easy dinner</strong><span class="tag food">dine</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SUN · JUL 26</span><span class="day-title serif">Spa &amp; onward</span></div>
+    <ul class="items">
+      <li><span class="time">Late AM</span><span class="what"><strong>Sleep late</strong></span></li>
+      <li><span class="time">Midday</span><span class="what"><strong>Massage at the spa</strong><span class="tag book">book</span><span>The one to still lock in</span></span></li>
+      <li><span class="time">Aft</span><span class="what"><strong>Pool, then check out → black car to Paris</strong><span class="tag book">book</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PARIS ============ -->
+<section class="page" id="paris" data-accent="var(--paris)">
+  <div class="leg-hero">
+    <div class="eyebrow">Leg Four</div>
+    <h2 class="serif">Paris</h2>
+    <div class="hotel">Relais Christine, Saint-Germain · <a class="maplink" href="https://maps.google.com/?q=Relais+Christine+Paris" target="_blank">map</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SAT · JUL 26</span><span class="day-title serif">Arrival</span></div>
+    <div class="day-note">Afternoon arrival — ease in.</div>
+    <ul class="items">
+      <li><span class="time">Aft</span><span class="what"><strong>Settle in, wander Saint-Germain</strong><span>Rue de Buci, rue de Seine, galleries</span></span></li>
+      <li><span class="time">Late aft</span><span class="what"><strong>Rosé at La Palette</strong><span>Rue de Seine — local, less touristy</span></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>La Closerie des Lilas</strong><span class="tag food">dine</span><span class="tag book">book</span><span>Montparnasse</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">SUN · JUL 27</span><span class="day-title serif">Passages &amp; Right Bank</span></div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>La Maison d’Isabelle</strong><span class="tag food">#1</span><span>5th — award-winning, walkable</span></span></li>
+      <li><span class="time">AM</span><span class="what"><strong>Palais-Royal + covered passages</strong><span>Galerie Vivienne, Passage des Panoramas — maps, stamps, prints</span></span></li>
+      <li><span class="time">Lunch</span><span class="what"><strong>Big lunch in the passages</strong><span class="tag food">dine</span></span></li>
+      <li><span class="time">2–4:30</span><span class="what"><strong>Siesta at the hotel</strong><span>Duck the heat</span></span></li>
+      <li><span class="time">Late aft</span><span class="what"><strong>Café + rosé</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Racines or Caffè Stern</strong><span class="tag food">dine</span><span class="tag book">book</span><span>In Passage des Panoramas</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">MON · JUL 28</span><span class="day-title serif">Orsay &amp; Montparnasse</span></div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>Maison Pichard</strong><span class="tag food">#2</span><span>15th — best-in-Paris contender</span></span></li>
+      <li><span class="time">Opening</span><span class="what"><strong>Musée d’Orsay at your own pace</strong><span class="tag book">book</span><span>Timed ticket, Impressionist floor first</span></span></li>
+      <li><span class="time">Lunch</span><span class="what"><strong>Le Dôme Montparnasse — big lunch</strong><span class="tag food">dine</span><span class="tag book">book</span><span>Grand seafood brasserie, a bottle</span></span></li>
+      <li><span class="time">2–4:30</span><span class="what"><strong>Siesta</strong></span></li>
+      <li><span class="time">Late aft</span><span class="what"><strong>Rue Mouffetard stroll + café rosé</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>La Cantine du Troquet Daguerre</strong><span class="tag food">dine</span><span class="tag book">book</span><span>Light — Basque bistro</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">TUE · JUL 29</span><span class="day-title serif">Normandy</span></div>
+    <div class="day-note">All-day 12-hour tour — booked. Rest on the coach; easy digestif when back.</div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>Grab near departure</strong><span class="tag food">#3</span></span></li>
+      <li><span class="time">All day</span><span class="what"><strong>Normandy tour</strong><span class="tag done">booked</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">WED · JUL 30</span><span class="day-title serif">Versailles by bike</span></div>
+    <div class="day-note">Picnic in the park grounds — not the palace. Shade &amp; breeze by the canal.</div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>Near the RER / d’Isabelle again</strong><span class="tag food">#4</span></span></li>
+      <li><span class="time">AM</span><span class="what"><strong>RER C → Versailles Château Rive Gauche</strong><span class="tag book">tickets</span></span></li>
+      <li><span class="time">In town</span><span class="what"><strong>Marché Notre-Dame — cheese, charcuterie, wine</strong></span></li>
+      <li><span class="time">Midday</span><span class="what"><strong>Rent bikes → picnic by the Grand Canal</strong><span class="tag book">book</span></span></li>
+      <li><span class="time">Late aft</span><span class="what"><strong>Back to Paris, café rosé</strong></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Light bistro / wine bar in Saint-Germain</strong><span class="tag food">dine</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">THU · JUL 31</span><span class="day-title serif">Montmartre &amp; the 2-star</span></div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>Mamiche</strong><span class="tag food">#5</span><span>Abbesses — right in Montmartre</span></span></li>
+      <li><span class="time">Early</span><span class="what"><strong>Montmartre + Sacré-Cœur</strong><span>Before heat/crowds; wander the back streets &amp; vineyard, down through Abbesses</span></span></li>
+      <li><span class="time">Lunch</span><span class="what"><strong>Big lunch</strong><span class="tag food">dine</span></span></li>
+      <li><span class="time">2–4:30</span><span class="what"><strong>Siesta</strong><span>Important — late dinner tonight</span></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>David Toutain (2-star)</strong><span class="tag food">dine</span><span class="tag book">book first</span><span>7th — sells out, book well ahead</span></span></li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">FRI · AUG 1</span><span class="day-title serif">Île de la Cité, Marais &amp; Louvre night</span></div>
+    <ul class="items">
+      <li><span class="time">Croissant</span><span class="what"><strong>Du Pain et des Idées</strong><span class="tag food">#6</span><span>10th — legendary; or Utopie en route</span></span></li>
+      <li><span class="time">Early</span><span class="what"><strong>Notre-Dame + Sainte-Chapelle</strong><span class="tag book">book</span><span>At opening to beat lines; the glass at Sainte-Chapelle on a sunny morning</span></span></li>
+      <li><span class="time">AM</span><span class="what"><strong>Bouquinistes along the Seine</strong><span>Map &amp; print stalls</span></span></li>
+      <li><span class="time">Midday</span><span class="what"><strong>The Marais</strong><span>Vintage on rue Vieille du Temple, Merci, Village Saint-Paul antiques, Place des Vosges</span></span></li>
+      <li><span class="time">Lunch</span><span class="what"><strong>Marché des Enfants Rouges</strong><span class="tag food">dine</span><span>Wandering food lunch</span></span></li>
+      <li><span class="time">2–4:30</span><span class="what"><strong>Siesta</strong><span>Louvre runs late tonight</span></span></li>
+      <li><span class="time">Evening</span><span class="what"><strong>Louvre — Friday late opening</strong><span class="tag book">book</span><span>Until ~9:45 PM. Richelieu wing &amp; French painting; skip the Mona Lisa scrum</span></span></li>
+      <li><span class="time">Dinner</span><span class="what"><strong>Le Comptoir du Relais / late &amp; light</strong><span class="tag food">dine</span></span></li>
+    </ul>
+  </div>
+
+  <div class="ticket">
+    <span class="code">BA0301</span>
+    <span class="leg-route">Paris → Home</span>
+    <span class="t-time">Sat Aug 2 · 10:35 AM</span>
+  </div>
+
+  <div class="day">
+    <div class="day-note" style="font-style:normal"><strong>Fromagerie note:</strong> Barthélémy (rue de Grenelle) or Laurent Dubois for cheese &amp; a Luxembourg picnic on any free afternoon. <strong>Deyrolle</strong> (rue du Bac curiosity house) &amp; Carré Rive Gauche antiquaires are minutes from the hotel for your maps/vintage wandering.</div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="page" id="checklist" data-accent="var(--london)">
+  <div class="leg-hero" style="border-color:#8fa084">
+    <div class="eyebrow" style="color:#6f8064">Bookings</div>
+    <h2 class="serif">Checklist</h2>
+  </div>
+  <p class="check-intro">Tap to check off. Saves on this device. Orange flags are the time-sensitive ones to do first.</p>
+  <div class="progress-track"><div class="progress-fill" id="chk-fill"></div></div>
+  <div class="progress-label" id="chk-label">0 of 0 booked</div>
+  <div id="chk-list"></div>
+  <button class="reset-btn" id="chk-reset">Reset all</button>
+</section>
+
+<footer>Made for Richie &amp; Angie · 20 years · Summer 2026</footer>
+
+<script>
+/* ---------- Navigation ---------- */
+const pages = document.querySelectorAll(".page");
+const tabs = document.querySelectorAll(".nav-tab");
+const accents = { home:"var(--london)", london:"var(--london)", navarino:"var(--navarino)", champagne:"var(--champagne)", paris:"var(--paris)", checklist:"#8fa084" };
+
+function go(id) {
+  pages.forEach(p => p.classList.toggle("visible", p.id === id));
+  tabs.forEach(t => t.classList.toggle("active", t.dataset.go === id));
+  document.documentElement.style.setProperty("--accent", accents[id] || "var(--london)");
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+document.querySelectorAll("[data-go]").forEach(el => {
+  el.addEventListener("click", () => go(el.dataset.go));
+});
+
+/* ---------- Countdown ---------- */
+(function(){
+  const dep = new Date("2026-07-17T00:00:00");
+  const now = new Date();
+  const days = Math.max(0, Math.ceil((dep - now) / 86400000));
+  document.getElementById("cd-num").textContent = days;
+})();
+
+/* ---------- Checklist ---------- */
+const checkData = [
+  { g: "Flights — verify & ticket", items: [
+    { t: "BA222 — London, Jul 17", n: "Confirm ticketed" },
+    { t: "BA744 — Gatwick → Kalamata, Jul 19 6:50 AM", n: "Confirm; plan early departure" },
+    { t: "TO3561 — Transavia → Orly, Jul 23 11:40 AM", n: "Low-cost: pay bags, pick seats", f: "check bags" },
+    { t: "BA0301 — Paris → home, Aug 2 10:35 AM", n: "Confirm ticketed" },
+  ]},
+  { g: "London", items: [
+    { t: "Fortnum & Mason tea, 4 PM", n: "Jul 17", f: "priority" },
+    { t: "Palms of Goa — birthday dinner", n: "Jul 18" },
+    { t: "Light dinner Jul 17", n: "Optional — may walk in" },
+    { t: "Car to Gatwick", n: "Night of Jul 18 / early Jul 19" },
+  ]},
+  { g: "Costa Navarino", items: [
+    { t: "Kalamata airport → resort driver", n: "Jul 19, arrives 12:40 PM" },
+    { t: "Greek restaurant — late dinner", n: "Jul 19" },
+    { t: "Hammam / Turkish treatment", n: "Jul 20", f: "priority" },
+    { t: "Pizza restaurant — dinner", n: "Jul 20" },
+    { t: "Golf — Bay Course, early tee", n: "Jul 21", f: "priority" },
+    { t: "Pylos dinner + car back", n: "Jul 21" },
+    { t: "Mixology — Three Admirals, 5 PM", n: "Jul 22" },
+    { t: "Private Kitchen dinner ~8 PM", n: "Jul 22" },
+    { t: "Resort → Kalamata airport", n: "Jul 23" },
+  ]},
+  { g: "Champagne", items: [
+    { t: "Black car — Orly → Royal Champagne", n: "Jul 23" },
+    { t: "Le Royal — the nice restaurant", n: "Jul 24" },
+    { t: "Bike rental + packed picnic", n: "Jul 24 — confirm w/ hotel" },
+    { t: "Cellar wine tasting", n: "Jul 25" },
+    { t: "Massage at spa", n: "Jul 26 (last day)", f: "add this" },
+    { t: "Black car — Royal Champagne → Paris", n: "Jul 26" },
+  ]},
+  { g: "Paris — reservations", items: [
+    { t: "David Toutain (2-star)", n: "Jul 31 — sells out, book first", f: "priority" },
+    { t: "La Closerie des Lilas", n: "Jul 26" },
+    { t: "Racines / Caffè Stern (Panoramas)", n: "Jul 27" },
+    { t: "Le Dôme Montparnasse — big lunch", n: "Jul 28" },
+    { t: "La Cantine du Troquet Daguerre", n: "Jul 28 / flex" },
+    { t: "Le Comptoir du Relais / final dinner", n: "Aug 1" },
+  ]},
+  { g: "Paris — tickets & logistics", items: [
+    { t: "Musée d'Orsay — timed ticket", n: "Jul 28, at opening" },
+    { t: "Sainte-Chapelle — timed ticket", n: "Jul 31" },
+    { t: "Louvre — late opening ticket", n: "Aug 1 (Fri) eve" },
+    { t: "Versailles RER tickets + bike rental", n: "Jul 30" },
+    { t: "Relais Christine — confirm stay", n: "Jul 26 – Aug 2" },
+    { t: "Normandy — all-day tour", n: "Jul 29", done: true },
+  ]},
+];
+
+const KEY = "grandtour2026_checks";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { saved = {}; }
+
+const check = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const list = document.getElementById("chk-list");
+let idx = 0;
+
+checkData.forEach(group => {
+  const gt = document.createElement("div");
+  gt.className = "chk-group-title";
+  gt.textContent = group.g;
+  list.appendChild(gt);
+  group.items.forEach(item => {
+    const id = "c" + (idx++);
+    const done = saved[id] !== undefined ? saved[id] : !!item.done;
+    const row = document.createElement("div");
+    row.className = "chk" + (done ? " done" : "");
+    row.dataset.id = id;
+    const flag = item.f ? `<span class="c-flag">${item.f}</span>` : "";
+    const note = item.n ? `<span class="c-note">${item.n}</span>` : "";
+    row.innerHTML = `<div class="box">${check}</div><div class="c-text">${item.t}${flag}${note}</div>`;
+    row.addEventListener("click", () => {
+      row.classList.toggle("done");
+      persist();
+      updateBar();
+    });
+    list.appendChild(row);
+  });
+});
+
+function persist() {
+  const state = {};
+  document.querySelectorAll(".chk").forEach(r => state[r.dataset.id] = r.classList.contains("done"));
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {}
+}
+function updateBar() {
+  const all = document.querySelectorAll(".chk");
+  const done = document.querySelectorAll(".chk.done");
+  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+  document.getElementById("chk-fill").style.width = pct + "%";
+  document.getElementById("chk-label").textContent = `${done.length} of ${all.length} booked · ${pct}%`;
+}
+document.getElementById("chk-reset").addEventListener("click", () => {
+  if (confirm("Uncheck everything?")) {
+    document.querySelectorAll(".chk").forEach(r => r.classList.remove("done"));
+    persist(); updateBar();
+  }
+});
+updateBar();
+</script>
+</body>
+</html>
