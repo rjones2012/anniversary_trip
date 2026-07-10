@@ -183,42 +183,43 @@ const BOOKINGS = [
     {id:"f4",t:"BA0301 — Paris → home, Aug 2 10:35 AM",n:"Confirm ticketed"},
   ]},
   {g:"London", items:[
-    {id:"l_tea",t:"Fortnum & Mason tea, 4 PM",n:"Jul 17",f:"priority"},
+    {id:"l_tea",t:"Fortnum & Mason tea, 4 PM",n:"Jul 17, 4:00 PM",booked:true,note:"Diamond Jubilee Tea Salon, 4:00 PM."},
     {id:"l_delhi",t:"Delhi Brasserie — birthday dinner",n:"Jul 18, 7:30 PM · table for 2",booked:true},
     {id:"l_din17",t:"Light dinner Jul 17",n:"Optional — may walk in"},
     {id:"l_gatwick",t:"Car to Gatwick",n:"Night Jul 18 / early Jul 19"},
   ]},
   {g:"Costa Navarino", items:[
-    {id:"n_arrdriver",t:"Kalamata airport → resort driver",n:"Jul 19, arrives 12:40 PM"},
-    {id:"n_oliviera",t:"Oliviera — Greek dinner",n:"Jul 19, late"},
-    {id:"n_hammam",t:"Hammam / Turkish treatment (spa)",n:"Jul 20",f:"priority"},
-    {id:"n_pizza",t:"Pizza Sapienza by Daniele Cason",n:"Jul 20 dinner"},
-    {id:"n_golf",t:"Golf — Bay Course, early tee",n:"Jul 21",f:"priority"},
+    {id:"n_arrdriver",t:"Kalamata airport → resort driver",n:"Jul 19, 12:40 · Req JIKNI8 · BA2744 · complimentary",booked:true,conf:"JIKNI8",note:"Kalamata Airport → Mandarin Oriental. Flight BA2744, 12:40. 2 people / 2 bags. Complimentary."},
+    {id:"n_oliviera",t:"Oliviera — Greek dinner",n:"Jul 19, 8:00 PM · Req KBKSOG · 2 ppl",booked:true,conf:"KBKSOG",note:"Oliviera Restaurant by Mandarin Oriental. 8:00 PM, 2 people."},
+    {id:"n_hammam_r",t:"Hammam — Richie (spa)",n:"Jul 20, 11:00 AM",booked:true,note:"Mandarin Oriental Spa, 11:00 AM."},
+    {id:"n_hammam_a",t:"Hammam — Angie (spa)",n:"Jul 21, 1:15 PM",booked:true,note:"Mandarin Oriental Spa, 1:15 PM."},
+    {id:"n_golf",t:"Golf — Bay Course",n:"Jul 21, 9:30 AM · conf 4CTV8 · 18 holes",booked:true,conf:"4CTV8",note:"The Bay Course, 09:30, 18 holes. Online web booking GF 18H Bay."},
     {id:"n_pylos",t:"Pylos dinner (Koukos / O Aetos / Sto Steno)",n:"Jul 21 — pick one",f:"decide"},
     {id:"n_mixology",t:"Mixology — Three Admirals Lounge, 5 PM",n:"Jul 22"},
     {id:"n_private",t:"The Private Kitchen dinner ~8 PM",n:"Jul 22"},
-    {id:"n_depdriver",t:"Resort → Kalamata airport",n:"Jul 23"},
+    {id:"n_depdriver",t:"Resort → Kalamata airport",n:"Jul 23, 08:40 · Req ETUVDV · complimentary",booked:true,conf:"ETUVDV",note:"Mandarin Oriental → Kalamata Airport. 08:40, for flight TO3561 (11:40). 2 people / 2 bags. Complimentary."},
   ]},
   {g:"Champagne", items:[
-    {id:"c_car_in",t:"Black car — Orly → Royal Champagne",n:"Jul 23"},
-    {id:"c_leroyal",t:"Le Royal — the nice restaurant",n:"Jul 24"},
+    {id:"c_car_in",t:"Blacklane — Orly → Royal Champagne",n:"Jul 23 · booked (Blacklane app)",booked:true,note:"Blacklane car, Paris Orly → Royal Champagne. Details in Blacklane app."},
+    {id:"c_leroyal",t:"Le Royal — the nice restaurant",n:"Jul 24, 8:00 PM",booked:true,note:"Le Royal, 8:00 PM."},
+    {id:"c_bellevue",t:"Le Bellevue — dinner",n:"Jul 25, 8:00 PM",booked:true,note:"Le Bellevue, 8:00 PM."},
     {id:"c_bike",t:"Bike rental + packed picnic",n:"Jul 24 — confirm w/ hotel"},
     {id:"c_cellar",t:"Cellar wine tasting",n:"Jul 25"},
     {id:"c_massage",t:"Massage at spa",n:"Jul 26 (last day)",f:"add this"},
     {id:"c_car_out",t:"Black car — Royal Champagne → Paris",n:"Jul 26"},
   ]},
   {g:"Paris — reservations", items:[
-    {id:"p_toutain",t:"David Toutain (2-star)",n:"Jul 31 — sells out, book first",f:"priority"},
+    {id:"p_yoshinaga",t:"Sushi Yoshinaga (2-star omakase)",n:"Fri Jul 31, 7:00 PM · 2× Omakase €330pp",booked:true,note:"Sushi Yoshinaga, 27 rue du 4 Septembre, 75002. Fri Jul 31, 7:00 PM, 2 people. 2× Omakase du Chef Yoshinaga (€330pp). Free cancel until Jul 28, 7 PM; card hold otherwise."},
     {id:"p_closerie",t:"La Closerie des Lilas",n:"Jul 26"},
     {id:"p_panoramas",t:"Racines / Caffè Stern (Panoramas)",n:"Jul 27"},
-    {id:"p_dome",t:"Le Dôme Montparnasse — big lunch",n:"Jul 28"},
+    {id:"p_dome",t:"Le Dôme Montparnasse — big lunch",n:"Tue Jul 28, 12:30 PM · 2 covers · €40 hold",booked:true,conf:"",note:"Le Dôme – Montparnasse, 108 bd du Montparnasse, 75014. Tue Jul 28, 12:30 PM, 2 covers. €40 card hold. Tel 01 43 35 25 81."},
     {id:"p_troquet",t:"La Cantine du Troquet Daguerre",n:"Jul 28 / flex"},
     {id:"p_comptoir",t:"Le Comptoir du Relais / final dinner",n:"Aug 1"},
   ]},
   {g:"Paris — tickets & logistics", items:[
-    {id:"p_orsay",t:"Musée d'Orsay — timed ticket",n:"Jul 28, at opening"},
-    {id:"p_sainte",t:"Sainte-Chapelle — timed ticket",n:"Jul 31 / Aug 1"},
-    {id:"p_louvre",t:"Louvre — late opening ticket",n:"Aug 1 (Fri) eve"},
+    {id:"p_orsay",t:"Musée d'Orsay — timed ticket",n:"Fri Jul 31, 10:30 AM",booked:true,note:"Musée d'Orsay, Fri Jul 31, 10:30 AM. Plan ~2 hrs max."},
+    {id:"p_sainte",t:"Sainte-Chapelle — timed ticket",n:"Aug 1"},
+    {id:"p_louvre",t:"Louvre — timed ticket",n:"Mon Jul 27, 12:30 PM",booked:true,note:"Louvre, Mon Jul 27, 12:30 PM. Plan ~2 hrs max — Richelieu wing & French painting."},
     {id:"p_versailles",t:"Versailles RER tickets + bike rental",n:"Jul 30"},
     {id:"p_hotel",t:"Relais Christine — confirm stay",n:"Jul 26 – Aug 2"},
     {id:"p_normandy",t:"Normandy — all-day tour",n:"Jul 29",booked:true},
@@ -268,7 +269,6 @@ const LEGS = [
     hotel:"Mandarin Oriental, Messenia",
     pins:[
       {n:"Mandarin Oriental (hotel)",c:[36.935773,21.713371],t:"hotel"},
-      {n:"Voidokilia Beach",c:[36.963623,21.662762],t:"park"},
       {n:"Pylos town & harbour",c:[36.914646,21.697533],t:"food"},
     ],
     days:[
@@ -279,19 +279,18 @@ const LEGS = [
       ]},
       {date:"MON · JUL 20",title:"Spa & sea",items:[
         {t:"Late AM",b:"Sleep in"},
-        {t:"Midday",b:"Hammam / Turkish treatment",bk:"n_hammam",s:"At the Mandarin Oriental Spa"},
+        {t:"11:00 AM",b:"Hammam — Richie",bk:"n_hammam_r",s:"Mandarin Oriental Spa"},
         {t:"Aft",b:"Pool / beach day"},
-        {t:"Dinner",b:"Pizza Sapienza by Daniele Cason",tags:["food"],bk:"n_pizza",s:"Degustation pizza journey"},
+        {t:"Dinner",b:"Dinner open",tags:["food"],s:"Decide at the resort"},
       ]},
-      {date:"TUE · JUL 21",title:"Golf, beach & Pylos",note:"One southward arc: hotel → Voidokilia (~15 min) → Pylos town (~15 min more). Voidokilia sits between the resort and Pylos.",
-        walk:{label:"Beach + Pylos drive",mode:"driving",stops:[
+      {date:"TUE · JUL 21",title:"Golf, spa & Pylos",note:"Pylos town is ~15 min south of the resort. Beach trip TBD — decide at the resort.",
+        walk:{label:"Pylos drive",mode:"driving",stops:[
           {n:"Mandarin Oriental",c:[36.935773,21.713371]},
-          {n:"Voidokilia Beach",c:[36.963623,21.662762]},
           {n:"Pylos town & dinner",c:[36.914646,21.697533]},
         ]},
         items:[
-        {t:"Early",b:"Golf — Bay Course",bk:"n_golf",s:"Richie golfs; Angie to the beach"},
-        {t:"Aft",b:"Voidokilia Beach",s:"The famous Ω-shaped bay — no facilities, bring water/umbrella"},
+        {t:"9:30 AM",b:"Golf — Bay Course",bk:"n_golf",s:"Richie golfs (conf 4CTV8); Angie relaxes"},
+        {t:"1:15 PM",b:"Hammam — Angie",bk:"n_hammam_a",s:"Mandarin Oriental Spa"},
         {t:"Eve",b:"Pylos dinner",tags:["food"],bk:"n_pylos",s:"Koukos (wine + sunset), O Aetos (harbour seafood), or Sto Steno (homemade). Uber back."},
       ]},
       {date:"WED · JUL 22",title:"Cocktails & private kitchen",items:[
@@ -312,7 +311,7 @@ const LEGS = [
     ],
     days:[
       {date:"THU · JUL 23",title:"Arrival",items:[
-        {t:"~2:00 PM",b:"Orly → Royal Champagne (black car)",bk:"c_car_in"},
+        {t:"~2:00 PM",b:"Blacklane — Orly → Royal Champagne",bk:"c_car_in"},
         {t:"Aft",b:"Explore the hotel",s:"Pool, terrace, the view"},
         {t:"Dinner",b:"Easy dinner at the hotel",tags:["food"],s:"Le Bellevue / bistro side"},
       ]},
@@ -325,12 +324,12 @@ const LEGS = [
         items:[
         {t:"Early",b:"Bike ride to a picnic",bk:"c_bike",s:"Through the vines — confirm bikes + packed picnic"},
         {t:"Aft",b:"Afternoon at the pool"},
-        {t:"Dinner",b:"Le Royal — the nice restaurant",tags:["food"],bk:"c_leroyal"},
+        {t:"8:00 PM",b:"Le Royal — the nice restaurant",tags:["food"],bk:"c_leroyal"},
       ]},
       {date:"SAT · JUL 25",title:"Cellar tasting",items:[
         {t:"AM",b:"Wine tasting at the cellar",bk:"c_cellar"},
         {t:"Aft",b:"Pool afternoon"},
-        {t:"Dinner",b:"Easy dinner",tags:["food"]},
+        {t:"8:00 PM",b:"Le Bellevue — dinner",tags:["food"],bk:"c_bellevue"},
       ]},
       {date:"SUN · JUL 26",title:"Spa & onward",items:[
         {t:"Late AM",b:"Sleep late"},
@@ -361,42 +360,42 @@ const LEGS = [
       {n:"Mamiche (Montmartre)",c:[48.880089,2.343542],t:"food"},
       {n:"Du Pain et des Idées",c:[48.871245,2.362890],t:"food"},
       {n:"La Maison d'Isabelle",c:[48.849844,2.348275],t:"food"},
+      {n:"Sushi Yoshinaga",c:[48.869922,2.336515],t:"food"},
     ],
     days:[
-      {date:"SAT · JUL 26",title:"Arrival",note:"Afternoon arrival — ease in.",items:[
+      {date:"SUN · JUL 26",title:"Arrival",note:"Afternoon arrival — ease in.",items:[
         {t:"Aft",b:"Settle in, wander Saint-Germain",s:"Rue de Buci, rue de Seine, galleries"},
         {t:"Late aft",b:"Rosé at La Palette",s:"Rue de Seine — local, less touristy"},
         {t:"Dinner",b:"La Closerie des Lilas",tags:["food"],bk:"p_closerie",s:"Montparnasse"},
       ]},
-      {date:"SUN · JUL 27",title:"Passages & Right Bank",
+      {date:"MON · JUL 27",title:"Louvre & the Passages",note:"Louvre ticket 12:30 PM — plan ~2 hrs max, then the Right Bank passages right beside it.",
         walk:{label:"Passages walk",mode:"walking",stops:[
           {n:"Relais Christine",c:[48.854390,2.340114]},
-          {n:"La Maison d'Isabelle",c:[48.849844,2.348275]},
           {n:"Palais-Royal",c:[48.863757,2.337126]},
           {n:"Galerie Vivienne",c:[48.866353,2.339485]},
           {n:"Passage des Panoramas",c:[48.871511,2.341904]},
         ]},
         items:[
         {t:"Croissant",b:"La Maison d'Isabelle",tags:["food"],s:"#1 — award-winning, walkable"},
-        {t:"AM",b:"Palais-Royal + covered passages",s:"Galerie Vivienne, Passage des Panoramas — maps, stamps, prints"},
-        {t:"Lunch",b:"Big lunch in the passages",tags:["food"]},
-        {t:"2–4:30",b:"Siesta at the hotel",s:"Duck the heat"},
-        {t:"Late aft",b:"Café + rosé"},
+        {t:"Late AM",b:"Stroll to Palais-Royal",s:"Gardens, arcades — right by the Louvre"},
+        {t:"12:30 PM",b:"Louvre",bk:"p_louvre",s:"~2 hrs max — Richelieu wing & French painting; skip the Mona Lisa scrum"},
+        {t:"Aft",b:"Covered passages",s:"Galerie Vivienne, Passage des Panoramas — maps, stamps, prints"},
+        {t:"Late aft",b:"Café + rosé, siesta as needed"},
         {t:"Dinner",b:"Racines or Caffè Stern",tags:["food"],bk:"p_panoramas",s:"In Passage des Panoramas"},
       ]},
-      {date:"MON · JUL 28",title:"Orsay & Montparnasse",items:[
+      {date:"TUE · JUL 28",title:"Le Dôme lunch & the Left Bank",note:"No museum today — built around the Dôme lunch.",items:[
         {t:"Croissant",b:"Maison Pichard",tags:["food"],s:"#2 — best-in-Paris contender (15th)"},
-        {t:"Opening",b:"Musée d'Orsay at your own pace",bk:"p_orsay",s:"Timed ticket, Impressionist floor first"},
-        {t:"Lunch",b:"Le Dôme Montparnasse — big lunch",tags:["food"],bk:"p_dome",s:"Grand seafood brasserie, a bottle"},
+        {t:"AM",b:"Slow morning / Left Bank wander",s:"Rue du Bac, Deyrolle, Carré Rive Gauche antiquaires"},
+        {t:"12:30 PM",b:"Le Dôme Montparnasse — big lunch",tags:["food"],bk:"p_dome",s:"Grand seafood brasserie, a bottle · 2 covers"},
         {t:"2–4:30",b:"Siesta"},
         {t:"Late aft",b:"Rue Mouffetard stroll + café rosé"},
         {t:"Dinner",b:"La Cantine du Troquet Daguerre",tags:["food"],bk:"p_troquet",s:"Light — Basque bistro"},
       ]},
-      {date:"TUE · JUL 29",title:"Normandy",note:"All-day 12-hour tour — booked. Rest on the coach; easy digestif when back.",items:[
+      {date:"WED · JUL 29",title:"Normandy",note:"All-day 12-hour tour — booked. Rest on the coach; easy digestif when back.",items:[
         {t:"Croissant",b:"Grab near departure",tags:["food"],s:"#3"},
         {t:"All day",b:"Normandy tour",bk:"p_normandy"},
       ]},
-      {date:"WED · JUL 30",title:"Versailles by bike",note:"Picnic in the park grounds — not the palace. Shade & breeze by the canal.",items:[
+      {date:"THU · JUL 30",title:"Versailles by bike",note:"Picnic in the park grounds — not the palace. Shade & breeze by the canal.",items:[
         {t:"Croissant",b:"Near the RER / d'Isabelle again",tags:["food"],s:"#4"},
         {t:"AM",b:"RER C → Versailles Château Rive Gauche",bk:"p_versailles"},
         {t:"In town",b:"Marché Notre-Dame — cheese, charcuterie, wine"},
@@ -404,7 +403,7 @@ const LEGS = [
         {t:"Late aft",b:"Back to Paris, café rosé"},
         {t:"Dinner",b:"Light bistro / wine bar in Saint-Germain",tags:["food"]},
       ]},
-      {date:"THU · JUL 31",title:"Montmartre & the 2-star",
+      {date:"FRI · JUL 31",title:"Orsay, Montmartre & Yoshinaga",note:"Orsay ticket 10:30 AM (~2 hrs max). Montmartre in the late afternoon — cooler light, fewer crowds — then back down for dinner.",
         walk:{label:"Montmartre walk",mode:"walking",stops:[
           {n:"Mamiche (croissant)",c:[48.880089,2.343542]},
           {n:"Sacré-Cœur",c:[48.886705,2.343104]},
@@ -412,12 +411,12 @@ const LEGS = [
         ]},
         items:[
         {t:"Croissant",b:"Mamiche",tags:["food"],s:"#5 — Abbesses, in Montmartre"},
-        {t:"Early",b:"Montmartre + Sacré-Cœur",s:"Before heat/crowds; back streets, vineyard, down through Abbesses"},
-        {t:"Lunch",b:"Big lunch",tags:["food"]},
-        {t:"2–4:30",b:"Siesta",s:"Important — late dinner tonight"},
-        {t:"Dinner",b:"David Toutain (2-star)",tags:["food"],bk:"p_toutain",s:"7th — sells out, book first"},
+        {t:"10:30 AM",b:"Musée d'Orsay",bk:"p_orsay",s:"~2 hrs max — Impressionist floor first"},
+        {t:"Lunch",b:"Light lunch, Left Bank",tags:["food"]},
+        {t:"Late aft",b:"Montmartre + Sacré-Cœur",s:"Back streets, vineyard, down through Abbesses — cooler light"},
+        {t:"7:00 PM",b:"Sushi Yoshinaga",tags:["food"],bk:"p_yoshinaga",s:"2-star omakase · 27 rue du 4 Septembre, 2nd arr."},
       ]},
-      {date:"FRI · AUG 1",title:"Île de la Cité, Marais & Louvre night",
+      {date:"SAT · AUG 1",title:"Île de la Cité & Marais",note:"Relaxed final full day.",
         walk:{label:"Cité & Marais walk",mode:"walking",stops:[
           {n:"Relais Christine",c:[48.854390,2.340114]},
           {n:"Sainte-Chapelle",c:[48.855375,2.344961]},
@@ -431,9 +430,9 @@ const LEGS = [
         {t:"AM",b:"Bouquinistes along the Seine",s:"Map & print stalls"},
         {t:"Midday",b:"The Marais",s:"Vintage on rue Vieille du Temple, Merci, Village Saint-Paul, Place des Vosges"},
         {t:"Lunch",b:"Marché des Enfants Rouges",tags:["food"],s:"Wandering food lunch"},
-        {t:"2–4:30",b:"Siesta",s:"Louvre runs late tonight"},
-        {t:"Evening",b:"Louvre — Friday late opening",bk:"p_louvre",s:"Until ~9:45 PM. Richelieu wing & French painting; skip the Mona Lisa scrum"},
-        {t:"Dinner",b:"Le Comptoir du Relais / late & light",tags:["food"],bk:"p_comptoir"},
+        {t:"2–4:30",b:"Siesta"},
+        {t:"Late aft",b:"Last café + rosé, final shopping"},
+        {t:"Dinner",b:"Le Comptoir du Relais / final dinner",tags:["food"],bk:"p_comptoir"},
       ]},
     ],
     tail:"BA0301 — Paris → home, Sat Aug 2 10:35 AM.  ·  Fromagerie note: Barthélémy (rue de Grenelle) or Laurent Dubois for a Luxembourg picnic. Deyrolle & Carré Rive Gauche antiquaires are minutes from the hotel.",
@@ -447,7 +446,7 @@ try { store = JSON.parse(localStorage.getItem(BKEY) || "{}"); } catch(e) { store
 function saveStore(){ try { localStorage.setItem(BKEY, JSON.stringify(store)); } catch(e){} }
 function bkDef(id){ for(const g of BOOKINGS) for(const it of g.items) if(it.id===id) return it; return null; }
 function getRec(id){
-  if(!store[id]){ const def=bkDef(id); store[id]={ booked: def&&def.booked?true:false, conf:"", note:"" }; }
+  if(!store[id]){ const def=bkDef(id)||{}; store[id]={ booked: def.booked?true:false, conf: def.conf||"", note: def.note||"" }; }
   return store[id];
 }
 // initialise all
@@ -546,7 +545,9 @@ function initLegMap(leg){
     L.circleMarker(p.c, { radius:7, fillColor:color, color:"#fff", weight:2, fillOpacity:1 }).addTo(map).bindPopup("<b>"+p.n+"</b>");
     latlngs.push(p.c);
   });
-  map.fitBounds(L.latLngBounds(latlngs).pad(0.18));  // start zoomed to the area
+  const bounds = L.latLngBounds(latlngs).pad(0.18);
+  map._targetBounds = bounds;              // remember where to frame
+  map.fitBounds(bounds);                    // attempt now (works if visible)
   mapInstances[leg.id] = map;
 }
 function initDayMap(dm){
@@ -558,7 +559,9 @@ function initDayMap(dm){
     L.marker(s.c, { icon:L.divIcon({ className:'', html:`<div style="background:${dm.accent};color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)">${i+1}</div>`, iconSize:[24,24], iconAnchor:[12,12] }) })
       .addTo(map).bindPopup(`<b>${i+1}. ${s.n}</b>`);
   });
-  map.fitBounds(line.getBounds().pad(0.25));
+  const dbounds = line.getBounds().pad(0.25);
+  map._targetBounds = dbounds;
+  map.fitBounds(dbounds);
   dm._map = map;
   const gm = { walking:"walking", driving:"driving", bicycling:"bicycling" }[dm.walk.mode] || "walking";
   const url = "https://www.google.com/maps/dir/?api=1&travelmode="+gm+"&origin="+pts[0][0]+","+pts[0][1]+
@@ -629,14 +632,22 @@ function updateBar(){
 
 /* ---- Nav ---- */
 const accents={ home:"var(--london)", london:"#46586e", navarino:"#2f7d8f", champagne:"#b08a3e", paris:"#8c3b46", bookings:"#6f8064" };
+function refit(map){
+  if(!map) return;
+  map.invalidateSize();                      // recalc container size now that it's visible
+  if(map._targetBounds) map.fitBounds(map._targetBounds);  // re-frame to the intended area
+}
 function go(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('visible',p.id===id));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.go===id));
   document.documentElement.style.setProperty('--accent',accents[id]||"var(--london)");
   window.scrollTo({top:0});
-  if(mapInstances[id]) setTimeout(()=>mapInstances[id].invalidateSize(),60);
-  // day maps for this leg
-  setTimeout(()=>{ dayMaps.forEach(dm=>{ if(dm.mid.startsWith('daymap-'+id) && dm._map) dm._map.invalidateSize(); }); },70);
+  // Maps can't measure themselves while their page is display:none, so re-fit on show.
+  // rAF ensures layout has applied the 'visible' class before we measure.
+  requestAnimationFrame(()=> setTimeout(()=>{
+    if(mapInstances[id]) refit(mapInstances[id]);
+    dayMaps.forEach(dm=>{ if(dm.mid.startsWith('daymap-'+id)) refit(dm._map); });
+  }, 30));
 }
 document.querySelectorAll('[data-go]').forEach(el=> el.addEventListener('click',()=>go(el.dataset.go)) );
 
