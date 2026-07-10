@@ -192,11 +192,10 @@ const BOOKINGS = [
     {id:"n_arrdriver",t:"Kalamata airport → resort driver",n:"Jul 19, 12:40 · Req JIKNI8 · BA2744 · complimentary",booked:true,conf:"JIKNI8",note:"Kalamata Airport → Mandarin Oriental. Flight BA2744, 12:40. 2 people / 2 bags. Complimentary."},
     {id:"n_oliviera",t:"Oliviera — Greek dinner",n:"Jul 19, 8:00 PM · Req KBKSOG · 2 ppl",booked:true,conf:"KBKSOG",note:"Oliviera Restaurant by Mandarin Oriental. 8:00 PM, 2 people."},
     {id:"n_hammam_r",t:"Hammam — Richie (spa)",n:"Jul 20, 11:00 AM",booked:true,note:"Mandarin Oriental Spa, 11:00 AM."},
-    {id:"n_hammam_a",t:"Hammam — Angie (spa)",n:"Jul 21, 1:15 PM",booked:true,note:"Mandarin Oriental Spa, 1:15 PM."},
+    {id:"n_hammam_a",t:"Hammam — Angie (spa)",n:"Jul 20, 1:15 PM",booked:true,note:"Mandarin Oriental Spa, 1:15 PM."},
     {id:"n_golf",t:"Golf — Bay Course",n:"Jul 21, 9:30 AM · conf 4CTV8 · 18 holes",booked:true,conf:"4CTV8",note:"The Bay Course, 09:30, 18 holes. Online web booking GF 18H Bay."},
     {id:"n_pylos",t:"Pylos dinner (Koukos / O Aetos / Sto Steno)",n:"Jul 21 — pick one",f:"decide"},
     {id:"n_mixology",t:"Mixology — Three Admirals Lounge, 5 PM",n:"Jul 22"},
-    {id:"n_private",t:"The Private Kitchen dinner ~8 PM",n:"Jul 22"},
     {id:"n_depdriver",t:"Resort → Kalamata airport",n:"Jul 23, 08:40 · Req ETUVDV · complimentary",booked:true,conf:"ETUVDV",note:"Mandarin Oriental → Kalamata Airport. 08:40, for flight TO3561 (11:40). 2 people / 2 bags. Complimentary."},
   ]},
   {g:"Champagne", items:[
@@ -280,6 +279,7 @@ const LEGS = [
       {date:"MON · JUL 20",title:"Spa & sea",items:[
         {t:"Late AM",b:"Sleep in"},
         {t:"11:00 AM",b:"Hammam — Richie",bk:"n_hammam_r",s:"Mandarin Oriental Spa"},
+        {t:"1:15 PM",b:"Hammam — Angie",bk:"n_hammam_a",s:"Mandarin Oriental Spa"},
         {t:"Aft",b:"Pool / beach day"},
         {t:"Dinner",b:"Dinner open",tags:["food"],s:"Decide at the resort"},
       ]},
@@ -290,13 +290,12 @@ const LEGS = [
         ]},
         items:[
         {t:"9:30 AM",b:"Golf — Bay Course",bk:"n_golf",s:"Richie golfs (conf 4CTV8); Angie relaxes"},
-        {t:"1:15 PM",b:"Hammam — Angie",bk:"n_hammam_a",s:"Mandarin Oriental Spa"},
         {t:"Eve",b:"Pylos dinner",tags:["food"],bk:"n_pylos",s:"Koukos (wine + sunset), O Aetos (harbour seafood), or Sto Steno (homemade). Uber back."},
       ]},
-      {date:"WED · JUL 22",title:"Cocktails & private kitchen",items:[
+      {date:"WED · JUL 22",title:"Cocktails & sea",items:[
         {t:"Day",b:"Pool / beach day"},
         {t:"5:00 PM",b:"Mixology — Three Admirals Lounge",bk:"n_mixology",s:"With LINE Athens (World's 50 Best Bars)"},
-        {t:"~8:00 PM",b:"The Private Kitchen",tags:["food"],bk:"n_private",s:"Bespoke gourmet, intimate"},
+        {t:"Dinner",b:"Dinner open",tags:["food"],s:"Decide at the resort"},
       ]},
     ],
     tail:"TO3561 — Transavia Kalamata → Paris Orly, Thu Jul 23 11:40 AM. Low-cost carrier — confirm baggage & seats. Arrive Orly ~2:00 PM, black car to Champagne.",
